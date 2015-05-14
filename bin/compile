@@ -163,6 +163,9 @@ source $BIN_DIR/steps/setuptools
 # Uninstall removed dependencies with Pip.
 source $BIN_DIR/steps/pip-uninstall
 
+# Numpy support
+source $BIN_DIR/steps/numpy-scipy
+
 # Mercurial support.
 source $BIN_DIR/steps/mercurial
 
