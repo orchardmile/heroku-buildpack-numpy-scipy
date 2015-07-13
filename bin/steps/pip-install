@@ -5,7 +5,13 @@ puts-step "Installing dependencies with pip"
 [ "$FRESH_PYTHON" ] && bpwatch start pip_install_first
 
 /app/.heroku/python/bin/pip install -r requirements.txt --find-links ./wheelhouse \
-    --exists-action=w --src=./.heroku/src --allow-all-external  | cleanup | indent
+    --exists-action=w --src=./.heroku/src --allow-all-external | indent
+
+# force reinstallation of any private dependencies
+if [ -d ./wheelhouse ]; then
+    /app/.heroku/python/bin/pip install --force-reinstall --ignore-installed \
+        --upgrade --no-index --no-deps ./wheelhouse/*.whl | indent
+fi
 
 # Smart Requirements handling
 cp requirements.txt .heroku/python/requirements-declared.txt
